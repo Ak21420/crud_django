@@ -125,15 +125,12 @@ def employee_api_delete(request,pk):
     try:
         data = Employee.objects.get(pk=pk) 
         
-        crud_data = data
         if request.method == 'DELETE': 
-            crud_data.is_delete = True
-            crud_operations_serializer = CrudOperationsSerializer(data, data=crud_data) 
-
-            if crud_operations_serializer.is_valid(): 
-                crud_operations_serializer.save() 
-                return JsonResponse(crud_operations_serializer.data) 
-            return JsonResponse(crud_operations_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            data.is_delete = True
+            data.save()
+            
+            return JsonResponse({'message': 'Employee was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+            
     except Employee.DoesNotExist: 
         return JsonResponse({'message': 'The Employee does not exist'}, status=status.HTTP_404_NOT_FOUND) 
  
