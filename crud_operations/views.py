@@ -7,7 +7,7 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
-from .serializers import CrudOperationsSerializer
+from .serializers import CrudOperationsSerializer, PositionSerializer
 
 from rest_framework.decorators import api_view
 
@@ -160,7 +160,6 @@ def employee_api_update(request, pk):
 
     except Employee.DoesNotExist: 
         return JsonResponse({'message': 'The Employee does not exist'}, status=status.HTTP_404_NOT_FOUND) 
-    
         
 # @api_view(['GET'])
 # def employee_api_list_published(request):

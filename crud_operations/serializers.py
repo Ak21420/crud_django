@@ -3,7 +3,7 @@ from .models import Employee, Position
  
  
 class CrudOperationsSerializer(serializers.ModelSerializer):
- 
+
     class Meta:
         model = Employee
         fields = ('id',
@@ -12,3 +12,11 @@ class CrudOperationsSerializer(serializers.ModelSerializer):
                   'mobile',
                   'position',
                   'is_delete')
+
+class PositionSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Position
+        fields = ('title')
+
+                  
