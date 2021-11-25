@@ -1,0 +1,17 @@
+                                                   List of relations
+ Schema |            Name            | Type  |     Owner      | Persistence | Access method |    Size    | Description 
+--------+----------------------------+-------+----------------+-------------+---------------+------------+-------------
+ public | auth_group                 | table | xcjhyepglkhrur | permanent   | heap          | 0 bytes    | 
+ public | auth_group_permissions     | table | xcjhyepglkhrur | permanent   | heap          | 0 bytes    | 
+ public | auth_permission            | table | xcjhyepglkhrur | permanent   | heap          | 40 kB      | 
+ public | auth_user                  | table | xcjhyepglkhrur | permanent   | heap          | 8192 bytes | 
+ public | auth_user_groups           | table | xcjhyepglkhrur | permanent   | heap          | 0 bytes    | 
+ public | auth_user_user_permissions | table | xcjhyepglkhrur | permanent   | heap          | 0 bytes    | 
+ public | crud_operations_employee   | table | xcjhyepglkhrur | permanent   | heap          | 0 bytes    | 
+ public | crud_operations_position   | table | xcjhyepglkhrur | permanent   | heap          | 0 bytes    | 
+ public | django_admin_log           | table | xcjhyepglkhrur | permanent   | heap          | 8192 bytes | 
+ public | django_content_type        | table | xcjhyepglkhrur | permanent   | heap          | 40 kB      | 
+ public | django_migrations          | table | xcjhyepglkhrur | permanent   | heap          | 48 kB      | 
+ public | django_session             | table | xcjhyepglkhrur | permanent   | heap          | 8192 bytes | 
+(12 rows)
+
