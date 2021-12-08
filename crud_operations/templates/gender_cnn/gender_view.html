@@ -1,0 +1,18 @@
+<!-- <!DOCTYPE html> -->
+<html>
+<head>
+	<title>Gender Past data</title>
+</head>
+<body>
+	
+	<h1>CNN - Gender Pridiction List</h1>
+	{% for gender in gender_data %}
+			<div class="col-md-4">
+					{{ gender.pred }}
+					<img src="{{ gender.image.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+                    {{ gender.date}}
+			</div>
+	{% endfor %}
+
+</body>
+</html>

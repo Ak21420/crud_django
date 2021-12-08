@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CNN - Gender Classification</title>
+</head>
+<body>
+    <h1>Upload Image</h1>
+    <br>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.image}}
+        
+        <!-- <div class="row">
+            <div class="col-md-8"> -->
+                <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+                    Submit
+                </button>
+            <!-- </div> -->
+            <!-- <div class="col-md-4">
+                <a href="{% url 'employee_list' %}" class="btn btn-secondary btn-block btn-lg">
+                    <i class="fas fa-stream"></i> Back to list
+                </a>
+            </div> -->
+        <!-- </div> -->
+    </form>
+
+    <!-- <form method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form> -->
+</body>
+</html>

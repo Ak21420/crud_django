@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -15,3 +16,9 @@ class Employee(models.Model):
     position= models.ForeignKey(Position,on_delete=models.CASCADE)
     is_delete = models.NullBooleanField(default = False)
     
+
+class GenderTest(models.Model):
+    image = models.ImageField(upload_to='images/')
+    pred = models.NullBooleanField()
+    date = models.DateTimeField(default=datetime.now())
+    is_delete = models.NullBooleanField(default = False)
