@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee, Position
+from .models import *
 
 class EmployeeForm(forms.ModelForm):
 
@@ -29,3 +29,15 @@ class PositionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PositionForm,self).__init__(*args, **kwargs)
         self.fields['title'].required = True
+
+class GenderClassForm(forms.ModelForm):
+
+    class Meta:
+        model = GenderTest
+        fields = ('image','pred','is_delete')
+        labels = {
+            'image':'Image',
+            'pred':'Gender',
+            'date':'Date Time',
+            'is_delete':'Delete'
+        }

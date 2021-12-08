@@ -14,4 +14,8 @@ urlpatterns = [
     # url(r'^api/create/(?P<pk>[0-9]+)$', views.tutorial_detail),
     url(r'^api/api_list_single/(?P<pk>[0-9]+)$', views.employee_api_list_single),
     url(r'^api/api_delete/(?P<pk>[0-9]+)$', views.employee_api_delete),
+
+    path('gender_prediction', views.gender_class_view, name = 'gender_prediction'),
+    path('gender_view', views.gender_class_list, name = 'gender_view'),
+    path('success', views.success, name = 'success'),
 ]

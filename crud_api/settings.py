@@ -170,3 +170,5 @@ DATABASES['default'].update(prod_db)
 
 # #  Add configuration for static files storage using whitenoise
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+TEMP_IMAGE_DIR = './images'
