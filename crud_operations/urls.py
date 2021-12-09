@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from django.urls import path,include
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.employee_form,name='employee_insert'), # get and post req. for insert operation
@@ -18,4 +20,4 @@ urlpatterns = [
     path('gender_prediction', views.gender_class_view, name = 'gender_prediction'),
     path('gender_view', views.gender_class_list, name = 'gender_view'),
     path('success', views.success, name = 'success'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

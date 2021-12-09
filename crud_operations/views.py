@@ -187,8 +187,8 @@ def gender_class_view(request):
     if request.method == 'POST':
         print(request.POST)
         # form = GenderClassForm(request.POST, request.FILES)
-        # gender_class = GenderTest.
-        img_path = os.path.join(conf.TEMP_IMAGE_DIR, str(request.FILES['image']))
+        # gender_class = GenderCNN.
+        img_path = os.path.join(conf.MEDIA_ROOT, str(request.FILES['image']))
 
         f = request.FILES['image']
 
@@ -220,25 +220,22 @@ def gender_class_view(request):
                 final_pred = True
                 print('male', prob)
 
+            ob = GenderCNN.objects.create(image=img_path, pred = final_pred)
+            
+            # gender_images = GenderCNN.objects.filter(pk=ob.id)
+            print(ob.image, ob.date, ob.pred)
+            print(type(ob.image))
+            return render(request, 'gender_cnn/gender_class.html', {'img_path' : ob.image,
+                                                                'final_pred' : ob.pred,
+                                                                'date' : ob.date})
             
         except Exception as e:
             print('------------------------------------------------')
             print(e)
-        # <MultiValueDict: {'image': [<InMemoryUploadedFile: 090154.jpg.jpg (image/jpeg)>]}>
-        # print("---------------------------------------------")
-        # print(form)
-  
-        # if form.is_valid():
-        #     form.save(commit=False)
-        #     # form.pred = final_pred
-        #     form.save()
-
-        print(GenderTest.objects.create(image=img_path, pred = final_pred))
-
-        return redirect('success')
+    
     elif request.method == 'GET':
         form = GenderClassForm()
-    # print('------------------')
+
     return render(request, 'gender_cnn/gender_class.html', {'form' : form})
   
   
@@ -250,7 +247,7 @@ def gender_class_list(request):
   
     if request.method == 'GET':
   
-        gender_images = GenderTest.objects.all() 
+        gender_images = GenderCNN.objects.all() 
         # print('---------------------------------------------------')
         # for i in gender_images:
         #     print('------------------')

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>CNN - Gender Classification</title>
 </head>
@@ -10,26 +11,48 @@
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.image}}
-        
-        <!-- <div class="row">
-            <div class="col-md-8"> -->
-                <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
-                    Submit
-                </button>
-            <!-- </div> -->
-            <!-- <div class="col-md-4">
-                <a href="{% url 'employee_list' %}" class="btn btn-secondary btn-block btn-lg">
-                    <i class="fas fa-stream"></i> Back to list
-                </a>
-            </div> -->
-        <!-- </div> -->
+        <!-- {{form.image}} -->
+        <input type="file" name="image">   
+          
+        <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+            Submit
+        </button>
+          
     </form>
+    {{ img_path }}
+    <br>
+         
+    <img src="{{MEDIA_URL}}/{{img_path}}" >
+    <!-- {{img_path.url}} -->
+    <!-- <img src="/home/new/CURD-Django/crud_django{{gender.image.url}}" > -->
+    
+    {{ final_pred }}
+    <br>
+    {{ date }}
 
-    <!-- <form method = "post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-    </form> -->
+
+    <!-- {% if gender_detail %}
+        <h1>The image shows </h1>
+        
+        {% for gender in gender_detail %}
+            <div class="col-md-4">
+                {{ gender.pred }}
+
+                
+                <img src="/home/new/CURD-Django/crud_django{{gender.image.url}}" >
+                
+                {{ gender.date}}
+                <br>
+                {{ gender.image }}
+            </div>
+            {% endfor %}
+            
+            {% else %}
+            <h1>Sumbit your image</h1>
+            {% endif %} -->
+            
+            <!-- /home/new/CURD-Django/crud_django/images/063489.jpg_ECB7s6a.jpg -->
+            <!-- /home/new/CURD-Django/crud_django/crud_operations/templates/gender_cnn/gender_class.html -->
+    <!-- class="img-responsive" style="width: 100%; float: left; margin-right: 10px;"  -->
 </body>
 </html>

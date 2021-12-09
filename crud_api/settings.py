@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d$zmwc3y00=-5cg*pd&6##)v$e36nb$3lf5cwl1w8#&9q5ak3+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['employee-crud-21.herokuapp.com','127.0.0.1']
 
@@ -171,4 +171,6 @@ DATABASES['default'].update(prod_db)
 # #  Add configuration for static files storage using whitenoise
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 TEMP_IMAGE_DIR = './images'

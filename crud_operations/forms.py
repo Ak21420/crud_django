@@ -33,7 +33,7 @@ class PositionForm(forms.ModelForm):
 class GenderClassForm(forms.ModelForm):
 
     class Meta:
-        model = GenderTest
+        model = GenderCNN
         fields = ('image','pred','is_delete')
         labels = {
             'image':'Image',
