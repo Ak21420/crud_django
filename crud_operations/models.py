@@ -17,8 +17,8 @@ class Employee(models.Model):
     is_delete = models.NullBooleanField(default = False)
     
 
-class GenderCNN(models.Model):
+class Gender_CNN(models.Model):
     image = models.CharField(max_length=128)
     pred = models.BooleanField()
-    date = models.DateTimeField(default=datetime.now())
+    date = models.CharField(max_length=60, default=datetime.now())
     is_delete = models.BooleanField(default = False)

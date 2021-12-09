@@ -180,55 +180,75 @@ def employee_api_update(request, pk):
 
 
 
-  
+def save_image(img_path, f):
+
+    if os.path.isfile(img_path) and os.access(img_path, os.R_OK):
+        # print('-----------------------------')
+        # print('Exists')
+        # print('-----------------------------')
+        pass
+    else:
+        file_name_2 = default_storage.save(img_path, f)
+        # print('-----------------------------')
+        # print(file_name_2)
+        file_url = default_storage.url(file_name_2)
+        # print(file_url)
+        # print('-----------------------------')
+
+def predict_value(img_path):
+    model = load_model('model_files/gender.h5') 
+
+    size = 224
+    img = load_img(img_path, target_size = (size, size, 3))
+
+    img = img_to_array(img)
+    img = img/255.0
+    img = img.reshape(1, size, size, 3)
+
+    return final_prediction(model.predict(img)[0][0])
+
+def final_prediction(prob):
+    if prob <= 0.5:
+        final_pred = False
+        print('female', (1-prob))
+    else:
+        final_pred = True
+        print('male', prob)
+    return final_pred
+                
 # Create your views here.
 def gender_class_view(request):
   
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
         # form = GenderClassForm(request.POST, request.FILES)
-        # gender_class = GenderCNN.
+        # gender_class = Gender_CNN.
         img_path = os.path.join(conf.MEDIA_ROOT, str(request.FILES['image']))
 
-        f = request.FILES['image']
+        save_image(img_path, request.FILES['image'])
 
-        file_name_2 = default_storage.save(img_path, f)
-        file_url = default_storage.url(file_name_2)
-        
-        # img_path2 = '/home/new/CURD-Django/crud_django/images/090114.jpg.jpg'
-        # print(request.FILES['image'])
+        try: 
+            final_pred = predict_value(img_path)
 
-        # assert img_path == img_path2
-        try:
-            model = load_model('model_files/gender.h5') 
-
-            size = 224
-            img = load_img(img_path, target_size = (size, size, 3))
-
-            print('-----------------------------------------------')
-            print(img)
-            img = img_to_array(img)
-            img = img/255.0
-            img = img.reshape(1, size, size, 3)
-
-            prob = model.predict(img)[0][0]
-
-            if prob <= 0.5:
-                final_pred = False
-                print('female', (1-prob))
-            else:
-                final_pred = True
-                print('male', prob)
-
-            ob = GenderCNN.objects.create(image=img_path, pred = final_pred)
+            ob, created = Gender_CNN.objects.update_or_create(
+                                    image = img_path, pred = final_pred,
+                                    defaults = {'image': img_path, 'pred' : final_pred,
+                                            'is_delete' : False, 'date' : datetime.now()},
+                                )
+            # ob = Gender_CNN.objects.create(image = img_path, pred = final_pred)
             
-            # gender_images = GenderCNN.objects.filter(pk=ob.id)
-            print(ob.image, ob.date, ob.pred)
-            print(type(ob.image))
-            return render(request, 'gender_cnn/gender_class.html', {'img_path' : ob.image,
-                                                                'final_pred' : ob.pred,
-                                                                'date' : ob.date})
+            # gender_images = Gender_CNN.objects.filter(pk=ob.id)
+            # print(ob.image, ob.date, ob.pred)
+            # print("----------------------------------")
+            # print(ob)
+            # print(created)
+            # print("----------------------------------")
+            # return render(request, 'gender_cnn/gender_class.html', {'img_path' : ob.image,
+            #                                                     'final_pred' : ob.pred,
+            #                                                     'date' : ob.date})
             
+            return redirect('gender_view')
+
         except Exception as e:
             print('------------------------------------------------')
             print(e)
@@ -247,21 +267,59 @@ def gender_class_list(request):
   
     if request.method == 'GET':
   
-        gender_images = GenderCNN.objects.all() 
-        # print('---------------------------------------------------')
-        # for i in gender_images:
-        #     print('------------------')
-        #     print(i.pred)
-        # print('---------------------------------------------------')
-        print(gender_images[0].date)
+        gender_images = Gender_CNN.objects.filter(is_delete = False) 
         
+        # print(gender_images[1].date)
         try:
             return render(request, 'gender_cnn/gender_view.html',
                         {'gender_data' : gender_images})
-
-            context = {'gender_data' : gender_images}
-            return render(request, "gender_cnn/gender_view.html", context)
         except Exception as e:
             print(e)
 
-                     
+def gender_class_delete(request,id):
+    gender_data = Gender_CNN.objects.get(pk=id) # (3,)
+    gender_data.is_delete = True
+   
+    gender_data.save()
+
+    return redirect('gender_view')
+
+def gender_class_update(request,id):
+    
+    gender_data = Gender_CNN.objects.get(pk=id)
+    if request.method == 'POST':
+        
+        # print(request.FILES['image'])
+        try:
+            if request.FILES['image']:
+                img_path = os.path.join(conf.MEDIA_ROOT, str(request.FILES['image']))
+
+                save_image(img_path, request.FILES['image'])
+
+                try: 
+                    final_pred = predict_value(img_path)
+
+                    gender_data.image = img_path
+                    gender_data.pred = final_pred
+                    gender_data.date = datetime.now()
+
+                    # ob, created = Gender_CNN.objects.update_or_create(
+                    #                         image = img_path, pred = final_pred,
+                    #                         defaults = {'image': img_path, 'pred' : final_pred,
+                    #                                 'is_delete' : False, 'date' : datetime.now()},
+                    #                     )
+                    gender_data.save()
+                    
+                    return redirect('gender_view')
+
+                except Exception as e:
+                    print('------------------------------------------------')
+                    print(e)
+        except:
+            return redirect('gender_view')
+            
+        
+    elif request.method == 'GET':
+        return render(request, 'gender_cnn/gender_update_prediction.html', {'form' : gender_data})
+    
+    # return render(request, "employee_register/employee_form.html", {'form': form})

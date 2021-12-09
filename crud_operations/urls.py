@@ -19,5 +19,7 @@ urlpatterns = [
 
     path('gender_prediction', views.gender_class_view, name = 'gender_prediction'),
     path('gender_view', views.gender_class_list, name = 'gender_view'),
-    path('success', views.success, name = 'success'),
+    path('gender_update/<int:id>/', views.gender_class_update,name='gender_update'),
+    path('gender_delete/<int:id>/',views.gender_class_delete,name='gender_delete'),
+    # path('success', views.success, name = 'success'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
